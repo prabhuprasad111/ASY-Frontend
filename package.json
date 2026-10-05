@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.1.1",
+    "gh-pages": "^6.3.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
+    "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^5.104.1",
     "@types/leaflet": "^1.9.22",
     "@types/react": "^19.3.0",

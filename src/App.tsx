@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import GISMap from './pages/GISMap';
@@ -46,11 +46,9 @@ function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: ()
             <span className="nav-text">Villages</span>
           </NavLink>
         </nav>
-        <div className="sidebar-foot">
-          <div className="live-row">
-            <div className="live-dot" /> <span className="nav-text">System Live</span>
-          </div>
-          <span className="nav-text">V2.4.1 (Node: Bhubaneswar)</span>
+        <div className="sidebar-foot" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+          <span className="nav-icon" style={{ fontSize: '1.1rem', margin: 0, opacity: 0.8 }}>©</span>
+          <span className="nav-text" style={{ fontSize: '0.75rem', opacity: 0.8, whiteSpace: 'normal', lineHeight: '1.2' }}>All rights Reserved DoEFCC</span>
         </div>
       </aside>
     </>
@@ -76,7 +74,7 @@ function Topbar({ toggleSidebar, isSidebarOpen }: { toggleSidebar: () => void, i
     <header className="topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <button className="toggle-btn" onClick={toggleSidebar}>
-          {isSidebarOpen ? '✕' : '☰'}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
         <div className="top-title">
           <strong>ASY Integrated Monitoring System</strong>

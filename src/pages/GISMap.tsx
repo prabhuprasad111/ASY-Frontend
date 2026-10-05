@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker, LayersControl, LayerGroup, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker, LayersControl, LayerGroup, Tooltip, Polygon } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import apiClient from '../api/client';
+import { MAYURBHANJ_BORDER } from '../data/mayurbhanjBoundary';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -37,6 +38,8 @@ const createCustomIcon = (color: string) => {
 };
 
 // Data sourced from the provided master Excel
+
+
 const VILLAGE_LOCATIONS = [
   { id: 1, name: 'Gendapokhari', range: 'Pithabata North', lat: 21.9500, lng: 86.7200, shgs: 5, income: '12.5L', pop: 890 },
   { id: 2, name: 'Digdiga', range: 'Pithabata South', lat: 21.9200, lng: 86.7000, shgs: 4, income: '10.8L', pop: 815 },
@@ -173,6 +176,15 @@ export default function GISMap() {
                   attribution="Tiles &copy; Esri"
                 />
               </LayersControl.BaseLayer>
+              
+                            <LayersControl.Overlay checked name="Mayurbhanj District Boundary">
+                <Polygon 
+                  positions={MAYURBHANJ_BORDER} 
+                  pathOptions={{ color: '#0f172a', weight: 4, dashArray: '10, 10', fillOpacity: 0.05, fillColor: '#94a3b8' }} 
+                >
+                  <Tooltip sticky>Mayurbhanj District (Approximate Boundary)</Tooltip>
+                </Polygon>
+              </LayersControl.Overlay>
               
               {/* Village Nodes */}
               <LayersControl.Overlay name="Show Village Borders (EDCs)">
