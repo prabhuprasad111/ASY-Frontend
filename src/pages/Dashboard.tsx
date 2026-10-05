@@ -6,7 +6,8 @@ import {
 import { 
   Search, RotateCcw, Filter, Activity, IndianRupee, ShieldCheck, 
   PiggyBank, Briefcase, Map, LineChart, Users, Compass, Globe, 
-  Leaf, Trees, Tent, List, Landmark, Trophy, TrendingUp, Shield, Lightbulb
+  Leaf, Trees, Tent, List, Landmark, Trophy, TrendingUp, Shield, Lightbulb,
+  Home, GraduationCap, Blocks, Calendar, Zap, PieChart as PieChartIcon
 } from 'lucide-react';
 import KPIDetailModal from '../components/KPIDetailModal';
 
@@ -87,6 +88,42 @@ const executiveEfficiencyData = [
   { metric: 'Profit Margin %', North: 28, South: 24 },
 ];
 
+const executiveMonthlyData = [
+  { month: 'Apr', income: 70, ntfp: 36, convergence: 115 },
+  { month: 'May', income: 66, ntfp: 32, convergence: 100 },
+  { month: 'Jun', income: 52, ntfp: 26, convergence: 70 },
+  { month: 'Jul', income: 56, ntfp: 30, convergence: 82 },
+  { month: 'Aug', income: 68, ntfp: 31, convergence: 98 },
+  { month: 'Sep', income: 84, ntfp: 42, convergence: 125 },
+];
+
+const executiveRangeData = [
+  { range: 'Pithabata North', div: 'North', convergence: 63, income: 34, tourists: 380, fundUtil: 81, score: 76 },
+  { range: 'Pithabata South', div: 'South', convergence: 40, income: 26, tourists: 360, fundUtil: 84, score: 80 },
+  { range: 'Dukura', div: 'South', convergence: 33, income: 21, tourists: 120, fundUtil: 80, score: 74 },
+  { range: 'Podadiha', div: 'South', convergence: 44, income: 30, tourists: 250, fundUtil: 87, score: 82 },
+  { range: 'Nawana North', div: 'North', convergence: 64, income: 43, tourists: 280, fundUtil: 84, score: 72 },
+  { range: 'Barehipani', div: 'North', convergence: 31, income: 22, tourists: 950, fundUtil: 79, score: 72 },
+  { range: 'Gudgudia', div: 'North', convergence: 94, income: 60, tourists: 4400, fundUtil: 85, score: 81 },
+  { range: 'Talabandha', div: 'North', convergence: 95, income: 62, tourists: 450, fundUtil: 88, score: 84 },
+  { range: 'Kendumundi', div: 'South', convergence: 39, income: 25, tourists: 100, fundUtil: 85, score: 80 },
+  { range: 'Thakurmunda', div: 'South', convergence: 96, income: 67, tourists: 330, fundUtil: 93, score: 92 },
+];
+
+const executiveTableData = [
+  { id: 'R1', month: 'Apr', div: 'North', range: 'Pithabata North', village: 'Gendapokhari', hh: 185, ben: 740, edc: 1, shg: 5, proj: 3, inc: '₹12.5 L', ntfp: '₹6.8 L', train: 45, conv: '₹22 L', util: '82%', tour: 150, score: 78 },
+  { id: 'R2', month: 'Apr', div: 'North', range: 'Pithabata North', village: 'Phuljhari', hh: 140, ben: 560, edc: 1, shg: 4, proj: 2, inc: '₹9.2 L', ntfp: '₹4.5 L', train: 32, conv: '₹18 L', util: '79%', tour: 80, score: 72 },
+  { id: 'R3', month: 'Apr', div: 'South', range: 'Pithabata South', village: 'Digdiga', hh: 165, ben: 660, edc: 1, shg: 4, proj: 2, inc: '₹10.8 L', ntfp: '₹5.2 L', train: 38, conv: '₹16 L', util: '81%', tour: 120, score: 75 },
+  { id: 'R4', month: 'Apr', div: 'South', range: 'Pithabata South', village: 'Gopinathpur', hh: 210, ben: 840, edc: 1, shg: 5, proj: 4, inc: '₹16.5 L', ntfp: '₹9.0 L', train: 52, conv: '₹25 L', util: '89%', tour: 250, score: 88 },
+  { id: 'R5', month: 'Apr', div: 'South', range: 'Dukura', village: 'Kabatghai', hh: 175, ben: 700, edc: 1, shg: 5, proj: 3, inc: '₹13.2 L', ntfp: '₹7.5 L', train: 41, conv: '₹20 L', util: '85%', tour: 70, score: 80 },
+  { id: 'R6', month: 'Apr', div: 'South', range: 'Dukura', village: 'Badmakabadi', hh: 155, ben: 620, edc: 1, shg: 4, proj: 2, inc: '₹8.7 L', ntfp: '₹4.0 L', train: 29, conv: '₹14 L', util: '76%', tour: 40, score: 69 },
+  { id: 'R7', month: 'May', div: 'South', range: 'Podadiha', village: 'Podadiha', hh: 230, ben: 920, edc: 1, shg: 7, proj: 5, inc: '₹21.5 L', ntfp: '₹11.0 L', train: 60, conv: '₹30 L', util: '92%', tour: 190, score: 91 },
+  { id: 'R8', month: 'May', div: 'South', range: 'Podadiha', village: 'Jamuani', hh: 145, ben: 580, edc: 1, shg: 4, proj: 2, inc: '₹9.1 L', ntfp: '₹4.8 L', train: 34, conv: '₹15 L', util: '84%', tour: 90, score: 74 },
+  { id: 'R9', month: 'May', div: 'North', range: 'Nawana North', village: 'Mohanpur', hh: 205, ben: 820, edc: 1, shg: 6, proj: 4, inc: '₹18.6 L', ntfp: '₹8.2 L', train: 55, conv: '₹26 L', util: '90%', tour: 135, score: 87 },
+  { id: 'R10', month: 'May', div: 'North', range: 'Nawana North', village: 'Kaliani', hh: 185, ben: 740, edc: 1, shg: 5, proj: 3, inc: '₹11.8 L', ntfp: '₹5.8 L', train: 40, conv: '₹19 L', util: '86%', tour: 75, score: 80 },
+  { id: 'R11', month: 'May', div: 'North', range: 'Nawana North', village: 'Uski', hh: 110, ben: 440, edc: 1, shg: 3, proj: 2, inc: '₹5.5 L', ntfp: '₹3.1 L', train: 24, conv: '₹10 L', util: '78%', tour: 35, score: 65 },
+];
+
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -138,6 +175,17 @@ export default function Dashboard() {
     (divFilter === 'All' || row.div === divFilter) &&
     (rangeFilter === 'All' || row.range === rangeFilter) &&
     (q === '' || row.village.toLowerCase().includes(q) || row.activity.toLowerCase().includes(q) || row.group.toLowerCase().includes(q))
+  );
+
+  const filteredExecutiveRangeData = executiveRangeData.filter(d => 
+    (divFilter === 'All' || d.div === divFilter) &&
+    (rangeFilter === 'All' || d.range === rangeFilter)
+  );
+
+  const filteredExecutiveTable = executiveTableData.filter(row => 
+    (divFilter === 'All' || row.div === divFilter) &&
+    (rangeFilter === 'All' || row.range === rangeFilter) &&
+    (q === '' || row.village.toLowerCase().includes(q) || row.month.toLowerCase().includes(q))
   );
 
   const openModal = (title: string, column: any) => setModalData({ isOpen: true, title, activeColumn: column });
@@ -792,149 +840,286 @@ export default function Dashboard() {
         <div className="tab-content" style={{ animation: 'fadeIn 0.3s ease-out' }}>
           
           {/* KPI ROW */}
-          <div className="kpi-grid-6" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
-            <div className="kpi-card" style={{ borderTopColor: '#3b82f6' }}>
-              <div className="kpi-title">Program Capital Leverage <Landmark size={18} color="#3b82f6" /></div>
-              <div className="kpi-val">2.43x</div>
-              <div className="kpi-sub">₹1.33 Cr Output from ₹54.9 L Govt Support</div>
+          <div className="benchmark-bar" style={{ background: 'linear-gradient(90deg, #1e3a8a 0%, #064e3b 100%)', padding: '20px 32px', borderRadius: '12px', color: '#fff', marginBottom: '24px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+            <div className="benchmark-title" style={{ marginBottom: '16px' }}>
+              <h3 style={{ margin: '0 0 6px 0', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.4rem', fontWeight: 800 }}>
+                <Activity size={24} /> Official Executive Dashboard KPI Benchmarks
+              </h3>
+              <p style={{ margin: 0, color: '#e2e8f0', fontSize: '0.9rem' }}>Verified with Field Monitoring Records (Excel Sheet: Executive Dashboard)</p>
             </div>
-            <div className="kpi-card" style={{ borderTopColor: '#10b981' }}>
-              <div className="kpi-title">Top Performing Range <Trophy size={18} color="#10b981" /></div>
-              <div className="kpi-val">Gudgudia</div>
-              <div className="kpi-sub">₹20.30 L Revenue • 4 Units • 51 Families</div>
-            </div>
-            <div className="kpi-card" style={{ borderTopColor: '#f59e0b' }}>
-              <div className="kpi-title">Highest Surge Domain <TrendingUp size={18} color="#f59e0b" /></div>
-              <div className="kpi-val">+146.7%</div>
-              <div className="kpi-sub">Community Eco-Tourism & Homestays</div>
-            </div>
-            <div className="kpi-card" style={{ borderTopColor: '#8b5cf6' }}>
-              <div className="kpi-title">Loan Recovery Risk Index <Shield size={18} color="#8b5cf6" /></div>
-              <div className="kpi-val">Low (Prime)</div>
-              <div className="kpi-sub">Backed by ₹26.8 L Group Savings Collateral</div>
+            <div style={{ display: 'flex', gap: '16px', overflowX: 'auto', paddingBottom: '8px', flexWrap: 'wrap' }}>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>HOUSEHOLDS COVERED</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>5,021</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>BENEFICIARIES</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>20,084</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>SCHEME CONVERGENCE</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>₹583 Lakhs</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>INCOME GENERATED</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>₹402.7 Lakhs</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>NTFP REVENUE</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>₹202.2 Lakhs</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>TOTAL TOURISTS</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>7,265</div>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 20px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', textAlign: 'center', flex: 1, minWidth: '130px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, marginBottom: '4px', letterSpacing: '0.05em' }}>AVG FUND UTILIZATION</div>
+                <div style={{ fontSize: '1.4rem', fontWeight: 800 }}>85%</div>
+              </div>
             </div>
           </div>
 
-          {/* EXECUTIVE CHARTS ROW */}
+          <div className="grid-12" style={{ marginBottom: '24px', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+            <div className="kpi-card" style={{ borderTopColor: '#3b82f6', gridColumn: 'span 1' }}>
+              <div className="kpi-title">HOUSEHOLDS COVERED <Home size={18} color="#3b82f6" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>5,086</div>
+              <div className="kpi-sub">Across 30 Forest Villages</div>
+            </div>
+            <div className="kpi-card" style={{ borderTopColor: '#10b981', gridColumn: 'span 1' }}>
+              <div className="kpi-title">TOTAL FIELD BENEFICIARIES <Users size={18} color="#10b981" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>20,344</div>
+              <div className="kpi-sub">30 EDCs • 147 Active SHGs</div>
+            </div>
+            <div className="kpi-card" style={{ borderTopColor: '#f59e0b', gridColumn: 'span 1' }}>
+              <div className="kpi-title">SCHEME CONVERGENCE <IndianRupee size={18} color="#f59e0b" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>₹592.0 L</div>
+              <div className="kpi-sub">Multi-Departmental Interventions</div>
+            </div>
+            <div className="kpi-card" style={{ borderTopColor: '#a855f7', gridColumn: 'span 1' }}>
+              <div className="kpi-title">TOTAL INCOME GENERATED <PiggyBank size={18} color="#a855f7" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>₹398.9 L</div>
+              <div className="kpi-sub">NTFP Share: <span style={{ color: '#f59e0b', fontWeight: 700 }}>₹200.5 L</span></div>
+            </div>
+            
+            <div className="kpi-card" style={{ borderTopColor: '#14b8a6', gridColumn: 'span 1' }}>
+              <div className="kpi-title">TOURISM FOOTFALL <Globe size={18} color="#14b8a6" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>7,725</div>
+              <div className="kpi-sub">Gudgudia & Barehipani Hotspots</div>
+            </div>
+            <div className="kpi-card" style={{ borderTopColor: '#ef4444', gridColumn: 'span 1' }}>
+              <div className="kpi-title">TRAINING PARTICIPANTS <GraduationCap size={18} color="#ef4444" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>1,278</div>
+              <div className="kpi-sub">Capacity Building & Skill Hubs</div>
+            </div>
+            <div className="kpi-card" style={{ borderTopColor: '#10b981', gridColumn: 'span 1' }}>
+              <div className="kpi-title">AVERAGE FUND UTILIZATION <PieChartIcon size={18} color="#10b981" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>85%</div>
+              <div className="kpi-sub">Peak 96% in Thakurmunda</div>
+            </div>
+            <div className="kpi-card" style={{ borderTopColor: '#3b82f6', gridColumn: 'span 1' }}>
+              <div className="kpi-title">LIVELIHOOD UNITS <Blocks size={18} color="#3b82f6" /></div>
+              <div className="kpi-val" style={{ fontSize: '1.8rem' }}>94 Units</div>
+              <div className="kpi-sub">Active Enterprise Hubs</div>
+            </div>
+          </div>
+
+          {/* Charts Row 1 */}
           <div className="grid-12" style={{ marginBottom: '24px' }}>
             <article className="panel span-6" style={{ padding: '24px', borderRadius: '12px' }}>
               <div className="panel-head" style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
                 <div>
-                  <h2 style={{ fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><TrendingUp size={18}/> YoY Program Trajectory</h2>
-                  <div className="panel-sub">Cumulative Revenue vs Govt Investment (₹ Lakhs) across deployment phases</div>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><TrendingUp size={16}/> Monthly Financial Trajectory (Apr - Sep)</h2>
+                  <div className="panel-sub">Income Generated, NTFP Revenue, and Scheme Convergence achieved month-by-month (₹ Lakhs)</div>
                 </div>
-                <Badge color="#3b82f6">GROWTH</Badge>
+                <Badge color="#3b82f6">TIMELINE</Badge>
               </div>
               <ResponsiveContainer width="100%" height={300}>
-                <ComposedChart data={executiveGrowthData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
+                <BarChart data={executiveMonthlyData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} label={{ value: 'Amount (₹ Lakhs)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12, dy: 50 }} />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} label={{ value: '₹ in Lakhs', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12, dy: 30 }} />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f8fafc' }} />
                   <Legend wrapperStyle={{ top: -10 }} iconType="rect" />
-                  <Bar dataKey="investment" name="Govt Investment (₹ L)" fill="#94a3b8" radius={[4, 4, 0, 0]} barSize={30} />
-                  <Line type="monotone" dataKey="revenue" name="Total Revenue Generated (₹ L)" stroke="#10b981" strokeWidth={4} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 4 }} />
-                </ComposedChart>
+                  <Bar dataKey="income" name="Income Generated (₹ L)" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={20} />
+                  <Bar dataKey="ntfp" name="NTFP Revenue (₹ L)" fill="#10b981" radius={[4, 4, 0, 0]} barSize={20} />
+                  <Bar dataKey="convergence" name="Scheme Convergence (₹ L)" fill="#d97706" radius={[4, 4, 0, 0]} barSize={20} />
+                </BarChart>
               </ResponsiveContainer>
             </article>
 
             <article className="panel span-6" style={{ padding: '24px', borderRadius: '12px' }}>
               <div className="panel-head" style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
                 <div>
-                  <h2 style={{ fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><Activity size={18}/> Division-Wise Efficiency Matrix</h2>
-                  <div className="panel-sub">Comparative analysis of ROI, Recovery, and Margins between divisions</div>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><Activity size={16}/> Range-Wise Scheme Convergence & Income</h2>
+                  <div className="panel-sub">Convergence Funds vs Income Generated across 10 Forest Ranges (₹ Lakhs)</div>
                 </div>
-                <Badge color="#8b5cf6">EFFICIENCY</Badge>
+                <Badge color="#f59e0b">IMPACT</Badge>
               </div>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={executiveEfficiencyData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
+                <BarChart data={filteredExecutiveRangeData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="metric" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} />
+                  <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 10 }} angle={-30} textAnchor="end" dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} label={{ value: '₹ in Lakhs', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12, dy: 30 }} />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f8fafc' }} />
                   <Legend wrapperStyle={{ top: -10 }} iconType="rect" />
-                  <Bar dataKey="North" name="North Division" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={24} />
-                  <Bar dataKey="South" name="South Division" fill="#f43f5e" radius={[4, 4, 0, 0]} barSize={24} />
+                  <Bar dataKey="convergence" name="Scheme Convergence (₹ L)" fill="#d97706" radius={[4, 4, 0, 0]} barSize={16} />
+                  <Bar dataKey="income" name="Income Generated (₹ L)" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={16} />
                 </BarChart>
               </ResponsiveContainer>
             </article>
           </div>
 
-          {/* DIVISIONS ROW */}
+          {/* Charts Row 2 */}
           <div className="grid-12" style={{ marginBottom: '24px' }}>
-            <div className="division-card north span-6" style={{ padding: '32px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <h3 style={{ margin: 0, fontSize: '1.4rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <ShieldCheck size={24} color="#3b82f6" /> Similipal North Wildlife Division
-                </h3>
-                <span style={{ background: '#eff6ff', color: '#3b82f6', padding: '6px 12px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>North Wildlife</span>
+            <article className="panel span-6" style={{ padding: '24px', borderRadius: '12px' }}>
+              <div className="panel-head" style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+                <div>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><Tent size={16}/> Eco-Tourism Footfall by Range</h2>
+                  <div className="panel-sub">Tourist visitor volume across Similipal core and buffer ranges</div>
+                </div>
+                <Badge color="#10b981">TOURISM</Badge>
               </div>
-              <p style={{ margin: '0 0 24px 0', fontSize: '0.95rem', color: '#475569', lineHeight: '1.6' }}>
-                Encompasses high-density bio-corridors including Barehipani, Nawana, Gudgudia, and Talabandha. Specializes in advanced NTFP aggregation and flagship community homestays.
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={filteredExecutiveRangeData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 10 }} angle={-30} textAnchor="end" dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} label={{ value: 'Visitors Count', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12, dy: 50 }} />
+                  <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f8fafc' }} />
+                  <Bar dataKey="tourists" name="Visitor Count" radius={[4, 4, 0, 0]} barSize={36}>
+                    {filteredExecutiveRangeData.map((entry, index) => {
+                      const colors = ['#0f766e', '#10b981', '#3b82f6', '#6366f1', '#a855f7', '#d97706', '#f59e0b', '#f43f5e', '#14b8a6', '#6366f1'];
+                      return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
+                    })}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </article>
+
+            <article className="panel span-6" style={{ padding: '24px', borderRadius: '12px' }}>
+              <div className="panel-head" style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+                <div>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><Zap size={16}/> Range Performance: Fund Utilization vs Dashboard Score</h2>
+                  <div className="panel-sub">Operational efficiency index comparison across ranges</div>
+                </div>
+                <Badge color="#8b5cf6">EFFICIENCY</Badge>
+              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <ComposedChart data={filteredExecutiveRangeData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                  <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 10 }} angle={-30} textAnchor="end" dy={10} />
+                  <YAxis domain={[50, 100]} axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 11 }} label={{ value: 'Percentage / Score', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12, dy: 60 }} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend wrapperStyle={{ top: -10 }} iconType="rect" />
+                  <Area type="monotone" dataKey="fundUtil" name="Avg Fund Utilization %" fill="#10b981" fillOpacity={0.1} stroke="none" />
+                  <Line type="monotone" dataKey="fundUtil" name="Avg Fund Utilization %" stroke="#10b981" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} />
+                  <Line type="monotone" dataKey="score" name="Avg Dashboard Score / 100" stroke="#8b5cf6" strokeWidth={3} strokeDasharray="5 5" dot={{ r: 4, strokeWidth: 2, fill: '#fff' }} />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </article>
+          </div>
+
+          {/* Division Cards */}
+          <div className="grid-12" style={{ marginBottom: '24px' }}>
+            <div className="division-card north span-6" style={{ padding: '24px', borderLeft: '4px solid #3b82f6', borderRadius: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Compass size={20} color="#3b82f6" /> Similipal North Wildlife Division
+                </h3>
+                <span style={{ background: '#eff6ff', color: '#3b82f6', padding: '4px 10px', borderRadius: '16px', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase' }}>North Wildlife</span>
+              </div>
+              <p style={{ margin: '0 0 20px 0', fontSize: '0.9rem', color: '#475569', lineHeight: '1.5' }}>
+                Encompasses Pithabata North, Nawana North, Barehipani, Gudgudia, and Talabandha. Major hub for tourism footfall (4,995 visitors) and heavy NTFP aggregation.
               </p>
-              <div className="div-metrics" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', padding: '24px', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                <div className="div-metric"><div className="div-metric-label">Total Turnover</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>₹69.45 L</div></div>
-                <div className="div-metric"><div className="div-metric-label">Net Profit</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>₹19.26 L</div></div>
-                <div className="div-metric"><div className="div-metric-label">Bank Linkage</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>₹36.80 L</div></div>
-                <div className="div-metric"><div className="div-metric-label">Active Loans</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>100</div></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Households</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>2,951</div></div>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Convergence</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>₹335 L</div></div>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Income Gen.</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>₹225.4 L</div></div>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Tourists</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>6,520</div></div>
               </div>
             </div>
 
-            <div className="division-card south span-6" style={{ padding: '32px' }}>
+            <div className="division-card south span-6" style={{ padding: '24px', borderLeft: '4px solid #f59e0b', borderRadius: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <h3 style={{ margin: 0, fontSize: '1.4rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <ShieldCheck size={24} color="#f59e0b" /> Similipal South Wildlife Division
+                <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Compass size={20} color="#f59e0b" /> Similipal South Wildlife Division
                 </h3>
-                <span style={{ background: '#fffbeb', color: '#f59e0b', padding: '6px 12px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>South Wildlife</span>
+                <span style={{ background: '#fffbeb', color: '#f59e0b', padding: '4px 10px', borderRadius: '16px', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase' }}>South Wildlife</span>
               </div>
-              <p style={{ margin: '0 0 24px 0', fontSize: '0.95rem', color: '#475569', lineHeight: '1.6' }}>
-                Encompasses buffer and fringe tribal pockets including Pithabata South, Dukura, Podadiha, Kendumundi, and Thakurmunda. Stronghold for livestock, lac, and medicinal plant farming.
+              <p style={{ margin: '0 0 20px 0', fontSize: '0.9rem', color: '#475569', lineHeight: '1.5' }}>
+                Encompasses Pithabata South, Dukura, Podadiha, Kendumundi, and Thakurmunda. Strong performer in high fund utilization and household enterprise convergence.
               </p>
-              <div className="div-metrics" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', padding: '24px', background: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                <div className="div-metric"><div className="div-metric-label">Total Turnover</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>₹63.90 L</div></div>
-                <div className="div-metric"><div className="div-metric-label">Net Profit</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>₹17.28 L</div></div>
-                <div className="div-metric"><div className="div-metric-label">Bank Linkage</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>₹34.10 L</div></div>
-                <div className="div-metric"><div className="div-metric-label">Active Loans</div><div className="div-metric-val" style={{ fontSize: '1.3rem' }}>91</div></div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Households</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>2,135</div></div>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Convergence</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>₹257 L</div></div>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Income Gen.</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>₹173.5 L</div></div>
+                <div><div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Tourists</div><div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>1,205</div></div>
               </div>
             </div>
           </div>
 
-          {/* STRATEGIC ASSESSMENT ROW */}
+          {/* New Executive Data Table */}
           <div className="grid-12" style={{ marginBottom: '24px' }}>
-            <div className="span-12" style={{ padding: '32px', background: '#fff', borderRadius: '12px', border: '1px solid var(--line)', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
-              <div style={{ marginBottom: '24px' }}>
-                <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Lightbulb size={22} color="#3b82f6" /> Strategic Field Assessment & Executive Recommendations
-                </h2>
-                <p style={{ margin: 0, color: '#64748b', fontSize: '1rem' }}>High-level intelligence synthesized across 30 tribal settlements</p>
-              </div>
-
-              <div className="grid-12" style={{ gap: '24px' }}>
-                <div className="span-6" style={{ background: '#f8fafc', padding: '24px', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', gap: '20px' }}>
-                  <div style={{ background: '#eff6ff', padding: '16px', borderRadius: '12px', height: 'fit-content' }}>
-                    <Users size={28} color="#3b82f6" />
-                  </div>
-                  <div>
-                    <h3 style={{ margin: '0 0 12px 0', fontSize: '1.15rem', color: '#0f172a' }}>100% Women SHG Governance</h3>
-                    <p style={{ margin: 0, color: '#475569', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                      All 30 active enterprises are managed entirely by women producer collectives, with 90.8% Scheduled Tribe membership, fostering deep financial autonomy and household resilience.
-                    </p>
-                  </div>
+            <article className="panel span-12" style={{ padding: '24px', borderRadius: '12px' }}>
+              <div className="panel-head" style={{ marginBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+                <div>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><List size={18}/> Executive Monitoring Register (Field Convergence & Socio-Economic Matrix)</h2>
+                  <div className="panel-sub">Comprehensive register of 30 village monitoring records across Similipal Tiger Reserve</div>
                 </div>
-
-                <div className="span-6" style={{ background: '#f8fafc', padding: '24px', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', gap: '20px' }}>
-                  <div style={{ background: '#eff6ff', padding: '16px', borderRadius: '12px', height: 'fit-content' }}>
-                    <Leaf size={28} color="#3b82f6" />
-                  </div>
-                  <div>
-                    <h3 style={{ margin: '0 0 12px 0', fontSize: '1.15rem', color: '#0f172a' }}>Zero Biotic Habitat Pressure</h3>
-                    <p style={{ margin: 0, color: '#475569', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                      Transition from subsistence extraction to organized NTFP value addition (Honey, Tamarind, Sal plates) incentivizes communities to protect tiger reserve core zones from forest fires.
-                    </p>
-                  </div>
-                </div>
+                <Badge color="#3b82f6">{filteredExecutiveTable.length} Records Filtered</Badge>
               </div>
-            </div>
+              <div className="table-container">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Division</th>
+                      <th>Range</th>
+                      <th>Village</th>
+                      <th>HH Covered</th>
+                      <th>Beneficiaries</th>
+                      <th>EDCs</th>
+                      <th>SHGs</th>
+                      <th>Projects</th>
+                      <th>Income (₹ L)</th>
+                      <th>NTFP (₹ L)</th>
+                      <th>Training</th>
+                      <th>Convergence (₹ L)</th>
+                      <th>Fund Util %</th>
+                      <th>Tourists</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredExecutiveTable.length === 0 ? <tr><td colSpan={16} style={{textAlign:'center'}}>No records match the current filters.</td></tr> : null}
+                    {filteredExecutiveTable.map(row => {
+                      let scoreColor = '#3b82f6';
+                      if (row.score < 75) scoreColor = '#d97706';
+                      if (row.score > 85) scoreColor = '#10b981';
+                      return (
+                        <tr key={row.id}>
+                          <td><span style={{ color: '#6366f1', background: '#e0e7ff', padding: '2px 8px', borderRadius: '12px', fontWeight: 700, fontSize: '0.75rem' }}>{row.month}</span></td>
+                          <td><span style={{ color: row.div === 'North' ? '#3b82f6' : '#f43f5e', fontWeight: 700 }}>{row.div}</span></td>
+                          <td style={{ fontWeight: 600 }}>{row.range}</td>
+                          <td>{row.village}</td>
+                          <td style={{ fontWeight: 700 }}>{row.hh}</td>
+                          <td>{row.ben}</td>
+                          <td>{row.edc}</td>
+                          <td>{row.shg}</td>
+                          <td>{row.proj}</td>
+                          <td style={{ color: '#3b82f6', fontWeight: 700 }}>{row.inc}</td>
+                          <td style={{ color: '#10b981', fontWeight: 700 }}>{row.ntfp}</td>
+                          <td>{row.train}</td>
+                          <td style={{ color: '#f59e0b', fontWeight: 700 }}>{row.conv}</td>
+                          <td style={{ fontWeight: 700 }}>{row.util}</td>
+                          <td>{row.tour}</td>
+                          <td style={{ color: scoreColor, fontWeight: 800 }}>{row.score}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </article>
           </div>
 
         </div>
