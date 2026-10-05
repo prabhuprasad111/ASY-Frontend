@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+﻿import { HashRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import GISMap from './pages/GISMap';
@@ -7,6 +7,7 @@ import Chatbot from './components/Chatbot';
 import MasterDataDirectory from './pages/MasterDataDirectory';
 import Microplans from './pages/Microplans';
 import { detailedKpiData } from './data/kpiData';
+import { Trees, PawPrint, Printer, FileSpreadsheet, Menu } from 'lucide-react';
 import './index.css';
 
 function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: () => void }) {
@@ -19,10 +20,10 @@ function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: ()
             <div className="brand-mark">ASY</div>
             <div className="brand-text">
               <div className="brand-title">Ama Similipal Yojana</div>
-              <div className="brand-sub">DoEFCC • Govt of Odisha</div>
+              <div className="brand-sub">DoEFCC â€¢ Govt of Odisha</div>
             </div>
           </div>
-          <button className="mobile-close-btn" onClick={toggleSidebar}>✕</button>
+          <button className="mobile-close-btn" onClick={toggleSidebar}>âœ•</button>
         </div>
         <nav className="nav">
           <NavLink to="/" end className={({ isActive }) => isActive ? 'nav-btn active' : 'nav-btn'} onClick={() => window.innerWidth <= 768 && toggleSidebar()}>
@@ -47,7 +48,7 @@ function Sidebar({ isOpen, toggleSidebar }: { isOpen: boolean, toggleSidebar: ()
           </NavLink>
         </nav>
         <div className="sidebar-foot" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-          <span className="nav-icon" style={{ fontSize: '1.1rem', margin: 0, opacity: 0.8 }}>©</span>
+          <span className="nav-icon" style={{ fontSize: '1.1rem', margin: 0, opacity: 0.8 }}>Â©</span>
           <span className="nav-text" style={{ fontSize: '0.75rem', opacity: 0.8, whiteSpace: 'normal', lineHeight: '1.2' }}>All rights Reserved DoEFCC</span>
         </div>
       </aside>
@@ -71,22 +72,43 @@ function Topbar({ toggleSidebar, isSidebarOpen }: { toggleSidebar: () => void, i
     document.body.removeChild(a);
   };
   return (
-    <header className="topbar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <button className="toggle-btn" onClick={toggleSidebar}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-        <div className="top-title">
-          <strong>ASY Integrated Monitoring System</strong>
-          {/* <span>Conservation-first programme management and decision support</span> */}
+    <header className="topbar" style={{ position: 'relative', borderTop: '4px solid transparent', padding: '10px 24px', height: 'auto', minHeight: '80px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', gap: '12px' }}>
+
+        {/* Left Side: Mobile Toggle & Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: '0 0 auto' }}>
+          <button className="toggle-btn" onClick={toggleSidebar} style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center' }}>
+            <Menu size={24} color="#334155" />
+          </button>
+          {/* <img src="https://upload.wikimedia.org/wikipedia/commons/fe/Seal_of_Odisha.png" alt="Odisha Govt" style={{ height: '60px', width: '60px', objectFit: 'contain', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }} className="hide-mobile" /> */}
         </div>
-      </div>
-      <div className="top-actions">
-        <select aria-label="Reporting period" className="hide-mobile">
-          <option>FY 2026–27</option>
-          <option>FY 2027–28</option>
-        </select>
-        <button className="primary-btn hide-mobile" onClick={handleExport}>Export snapshot</button>
+
+        {/* Center: Title & Badges */}
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+          {/* <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#ecfdf5', padding: '2px 10px', borderRadius: '12px', color: '#065f46', fontSize: '0.65rem', fontWeight: 800, letterSpacing: '0.05em', border: '1px solid #a7f3d0' }}>
+            <Trees size={12} />
+            GOVERNMENT OF ODISHA &bull; FOREST, ENVIRONMENT &amp; CLIMATE CHANGE DEPARTMENT
+          </div> */}
+          <h1 style={{ color: '#025c99', fontSize: '1.4rem', fontWeight: 900, margin: '6px 0', letterSpacing: '0.01em', textTransform: 'uppercase' }}>
+            Ama Similipal Yojana: Analysis &amp; Monitoring
+          </h1>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#059669', fontSize: '0.75rem', fontWeight: 800, letterSpacing: '0.05em' }}>
+            <PawPrint size={14} /> SIMILIPAL TIGER RESERVE
+          </div>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="top-actions" style={{ flex: '0 0 auto', display: 'flex', gap: '8px', flexDirection: 'row', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <button onClick={handleExport} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#2563eb', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', width: '130px', justifyContent: 'center', boxShadow: '0 2px 4px rgba(37,99,235,0.2)' }}>
+              <Printer size={14} /> Export Report
+            </button>
+            {/* <button onClick={handleExport} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f8fafc', color: '#334155', border: '1px solid #cbd5e1', padding: '6px 14px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', width: '130px', justifyContent: 'center' }}>
+              <FileSpreadsheet size={14} /> Export CSV
+            </button> */}
+          </div>
+        </div>
+
       </div>
     </header>
   );
@@ -132,3 +154,4 @@ export default function App() {
     </Router>
   );
 }
+
