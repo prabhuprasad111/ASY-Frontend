@@ -355,20 +355,20 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="kpi-grid-6">
-              <div className="kpi-card" style={{ borderTopColor: '#3b82f6' }}>
-                <div className="kpi-title">Total Tribal Beneficiaries <Globe size={18} color="#3b82f6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#3b82f6', cursor: 'pointer'}} onClick={() => openModal("Tribal Beneficiaries", "beneficiaries")}>
+                <div className="kpi-title">Total Tribal Beneficiaries<Globe size={18} color="#3b82f6" /></div>
                 <div className="kpi-val">{totalBeneficiaries}</div>
                 <div className="kpi-sub"><span style={{ color: '#10b981' }}>{totalBeneficiaries} Women</span> across {filteredRangeData.length * 3} Villages</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#10b981' }}>
-                <div className="kpi-title">Average Income Surge <LineChart size={18} color="#10b981" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#10b981', cursor: 'pointer'}} onClick={() => openModal("Income Surge", "income")}>
+                <div className="kpi-title">Average Income Surge<LineChart size={18} color="#10b981" /></div>
                 <div className="kpi-val">+{incomeSurge}%</div>
                 <div className="kpi-sub" style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span>₹{avgIncomeBefore.toLocaleString("en-IN")} Before</span> <span>➔</span> <span style={{ color: '#10b981' }}>₹{avgIncomeAfter.toLocaleString("en-IN")} After</span>
                 </div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f59e0b' }}>
-                <div className="kpi-title">Total Revenue Generated <PiggyBank size={18} color="#f59e0b" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f59e0b', cursor: 'pointer'}} onClick={() => openModal("Revenue Generated", "income")}>
+                <div className="kpi-title">Total Revenue Generated<PiggyBank size={18} color="#f59e0b" /></div>
                 <div className="kpi-val">₹{(totalRevenue > 100 ? (totalRevenue / 100).toFixed(2) + " Cr" : totalRevenue.toFixed(2) + " L")}</div>
                 <div className="kpi-sub">
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -376,18 +376,18 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#8b5cf6' }}>
-                <div className="kpi-title">Govt Investment & Support <IndianRupee size={18} color="#8b5cf6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#8b5cf6', cursor: 'pointer'}} onClick={() => openModal("Govt Support", "convergence")}>
+                <div className="kpi-title">Govt Investment & Support<IndianRupee size={18} color="#8b5cf6" /></div>
                 <div className="kpi-val">₹{govtSupport.toFixed(2)} L</div>
                 <div className="kpi-sub"><span style={{ color: '#8b5cf6' }}>Revolving Fund: ₹{totalRevFund.toFixed(1)} Lakhs</span></div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#06b6d4' }}>
-                <div className="kpi-title">Institutional Credit Linkage <Briefcase size={18} color="#06b6d4" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#06b6d4', cursor: 'pointer'}} onClick={() => openModal("Credit Linkage", "convergence")}>
+                <div className="kpi-title">Institutional Credit Linkage<Briefcase size={18} color="#06b6d4" /></div>
                 <div className="kpi-val">₹{totalBankLinkage.toFixed(2)} L</div>
                 <div className="kpi-sub">Active Bank Loans: <span style={{ color: '#06b6d4' }}>{totalActiveLoans} Accounts</span></div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f43f5e' }}>
-                <div className="kpi-title">Tribal & Gender Inclusion <Users size={18} color="#f43f5e" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f43f5e', cursor: 'pointer'}} onClick={() => openModal("Tribal & Gender Inclusion", "beneficiaries")}>
+                <div className="kpi-title">Tribal & Gender Inclusion<Users size={18} color="#f43f5e" /></div>
                 <div className="kpi-val">100% Women</div>
                 <div className="kpi-sub" style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: '#10b981' }}>{stPercentage}% ST Membership</span> <span>({totalST} ST Members)</span>
@@ -561,44 +561,44 @@ export default function Dashboard() {
           </div>
 
             <div className="grid-12" style={{ marginBottom: '24px', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-              <div className="kpi-card" style={{ borderTopColor: '#3b82f6', gridColumn: 'span 1' }}>
-                <div className="kpi-title">HOUSEHOLDS COVERED <Home size={18} color="#3b82f6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#3b82f6', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Households Covered", "hh")}>
+                <div className="kpi-title">HOUSEHOLDS COVERED<Home size={18} color="#3b82f6" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>{calcExecHH.toLocaleString()}</div>
                 <div className="kpi-sub">Across {calcExecVillage} Forest Villages</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#10b981', gridColumn: 'span 1' }}>
-                <div className="kpi-title">TOTAL FIELD BENEFICIARIES <Users size={18} color="#10b981" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#10b981', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Total Beneficiaries", "beneficiaries")}>
+                <div className="kpi-title">TOTAL FIELD BENEFICIARIES<Users size={18} color="#10b981" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>{calcExecBen.toLocaleString()}</div>
                 <div className="kpi-sub">{calcExecEdc} EDCs • {calcExecShg} Active SHGs</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f59e0b', gridColumn: 'span 1' }}>
-                <div className="kpi-title">SCHEME CONVERGENCE <IndianRupee size={18} color="#f59e0b" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f59e0b', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Scheme Convergence", "convergence")}>
+                <div className="kpi-title">SCHEME CONVERGENCE<IndianRupee size={18} color="#f59e0b" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>₹{calcExecConv} L</div>
                 <div className="kpi-sub">Multi-Departmental Interventions</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#a855f7', gridColumn: 'span 1' }}>
-                <div className="kpi-title">TOTAL INCOME GENERATED <PiggyBank size={18} color="#a855f7" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#a855f7', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Total Income Generated", "income")}>
+                <div className="kpi-title">TOTAL INCOME GENERATED<PiggyBank size={18} color="#a855f7" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>₹{calcExecRev} L</div>
                 <div className="kpi-sub">NTFP Share: <span style={{ color: '#f59e0b', fontWeight: 700 }}>₹{calcExecNtfp} L</span></div>
               </div>
   
-              <div className="kpi-card" style={{ borderTopColor: '#14b8a6', gridColumn: 'span 1' }}>
-                <div className="kpi-title">TOURISM FOOTFALL <Globe size={18} color="#14b8a6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#14b8a6', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Tourism Footfall", "tourism")}>
+                <div className="kpi-title">TOURISM FOOTFALL<Globe size={18} color="#14b8a6" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>{calcExecTourists.toLocaleString()}</div>
                 <div className="kpi-sub">Gudgudia & Barehipani Hotspots</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#ef4444', gridColumn: 'span 1' }}>
-                <div className="kpi-title">TRAINING PARTICIPANTS <GraduationCap size={18} color="#ef4444" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#ef4444', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Training Participants", "training")}>
+                <div className="kpi-title">TRAINING PARTICIPANTS<GraduationCap size={18} color="#ef4444" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>{calcExecTrain.toLocaleString()}</div>
                 <div className="kpi-sub">Capacity Building & Skill Hubs</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#10b981', gridColumn: 'span 1' }}>
-                <div className="kpi-title">AVERAGE FUND UTILIZATION <PieChartIcon size={18} color="#10b981" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#10b981', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Fund Utilization", "utilization")}>
+                <div className="kpi-title">AVERAGE FUND UTILIZATION<PieChartIcon size={18} color="#10b981" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>{calcExecUtil}%</div>
                 <div className="kpi-sub">Peak 96% in Thakurmunda</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#3b82f6', gridColumn: 'span 1' }}>
-                <div className="kpi-title">LIVELIHOOD UNITS <Blocks size={18} color="#3b82f6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#3b82f6', gridColumn: 'span 1', cursor: 'pointer'}} onClick={() => openModal("Livelihood Units", "projects")}>
+                <div className="kpi-title">LIVELIHOOD UNITS<Blocks size={18} color="#3b82f6" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.8rem' }}>{calcExecProj} Units</div>
                 <div className="kpi-sub">Active Enterprise Hubs</div>
               </div>
@@ -827,33 +827,33 @@ export default function Dashboard() {
           </div>
 
           <div className="kpi-grid-6">
-              <div className="kpi-card" style={{ borderTopColor: '#3b82f6' }}>
-                <div className="kpi-title">Active SHG Groups <Activity size={18} color="#3b82f6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#3b82f6', cursor: 'pointer'}} onClick={() => openModal("Active SHG Groups", "shgs")}>
+                <div className="kpi-title">Active SHG Groups<Activity size={18} color="#3b82f6" /></div>
                 <div className="kpi-val">{calcShgCount}</div>
                 <div className="kpi-sub">{calcShgMembers} Women Beneficiaries</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f59e0b' }}>
-                <div className="kpi-title">Total Gross Revenue <IndianRupee size={18} color="#f59e0b" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f59e0b', cursor: 'pointer'}} onClick={() => openModal("Total Gross Revenue", "income")}>
+                <div className="kpi-title">Total Gross Revenue<IndianRupee size={18} color="#f59e0b" /></div>
                 <div className="kpi-val">₹{calcShgRev} L</div>
                 <div className="kpi-sub">Generated across {calcShgCount} SHGs</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#10b981' }}>
-                <div className="kpi-title">Total Annual Profit <LineChart size={18} color="#10b981" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#10b981', cursor: 'pointer'}} onClick={() => openModal("Total Annual Profit", "income")}>
+                <div className="kpi-title">Total Annual Profit<LineChart size={18} color="#10b981" /></div>
                 <div className="kpi-val">₹{calcShgProfit} L</div>
                 <div className="kpi-sub">Avg Profit / SHG: <span style={{ color: '#10b981' }}>₹{calcShgCount ? (parseFloat(calcShgProfit) / calcShgCount).toFixed(2) : 0} Lakhs</span></div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#8b5cf6' }}>
-                <div className="kpi-title">Total Bank Linkage <Briefcase size={18} color="#8b5cf6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#8b5cf6', cursor: 'pointer'}} onClick={() => openModal("Total Bank Linkage", "convergence")}>
+                <div className="kpi-title">Total Bank Linkage<Briefcase size={18} color="#8b5cf6" /></div>
                 <div className="kpi-val">₹{totalBankLinkage.toFixed(2)} L</div>
                 <div className="kpi-sub">{totalActiveLoans} Active Loan Accounts</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#06b6d4' }}>
-                <div className="kpi-title">Total Group Savings <PiggyBank size={18} color="#06b6d4" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#06b6d4', cursor: 'pointer'}} onClick={() => openModal("Total Group Savings", "income")}>
+                <div className="kpi-title">Total Group Savings<PiggyBank size={18} color="#06b6d4" /></div>
                 <div className="kpi-val">₹{totalSavings.toFixed(2)} L</div>
                 <div className="kpi-sub">Revolving Fund: <span style={{ color: '#3b82f6' }}>₹{totalRevFund.toFixed(1)} Lakhs</span></div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f43f5e' }}>
-                <div className="kpi-title">Conservation Linkage <Compass size={18} color="#f43f5e" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f43f5e', cursor: 'pointer'}} onClick={() => openModal("Conservation Linkage", "ntfp")}>
+                <div className="kpi-title">Conservation Linkage<Compass size={18} color="#f43f5e" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.4rem' }}>11 NTFP / 3 Tourism</div>
                 <div className="kpi-sub">Forest-dependent sustainable models</div>
               </div>
@@ -1023,33 +1023,33 @@ export default function Dashboard() {
           </div>
 
           <div className="kpi-grid-6">
-              <div className="kpi-card" style={{ borderTopColor: '#10b981' }}>
-                <div className="kpi-title">Livelihood Projects <Trees size={18} color="#10b981" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#10b981', cursor: 'pointer'}} onClick={() => openModal("Livelihood Projects", "projects")}>
+                <div className="kpi-title">Livelihood Projects<Trees size={18} color="#10b981" /></div>
                 <div className="kpi-val">{calcLivProjects}</div>
                 <div className="kpi-sub">Across {filteredRangeData.length} Forest Ranges</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#3b82f6' }}>
-                <div className="kpi-title">Investment Support <IndianRupee size={18} color="#3b82f6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#3b82f6', cursor: 'pointer'}} onClick={() => openModal("Investment Support", "convergence")}>
+                <div className="kpi-title">Investment Support<IndianRupee size={18} color="#3b82f6" /></div>
                 <div className="kpi-val">₹{calcLivInv} L</div>
                 <div className="kpi-sub">Govt Seed Capital</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f59e0b' }}>
-                <div className="kpi-title">Household Income Transformation <LineChart size={18} color="#f59e0b" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f59e0b', cursor: 'pointer'}} onClick={() => openModal("Income Transformation", "income")}>
+                <div className="kpi-title">Household Income Transformation<LineChart size={18} color="#f59e0b" /></div>
                 <div className="kpi-val">+{livIncSurge}%</div>
                 <div className="kpi-sub" style={{ color: '#10b981' }}>Avg Leap Post-Intervention</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#8b5cf6' }}>
-                <div className="kpi-title">NTFP Aggregation Units <Leaf size={18} color="#8b5cf6" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#8b5cf6', cursor: 'pointer'}} onClick={() => openModal("NTFP Aggregation", "ntfp")}>
+                <div className="kpi-title">NTFP Aggregation Units<Leaf size={18} color="#8b5cf6" /></div>
                 <div className="kpi-val">13 Projects</div>
                 <div className="kpi-sub">Highest Growth Sector</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#06b6d4' }}>
-                <div className="kpi-title">Livestock Interventions <ShieldCheck size={18} color="#06b6d4" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#06b6d4', cursor: 'pointer'}} onClick={() => openModal("Livestock Interventions", "projects")}>
+                <div className="kpi-title">Livestock Interventions<ShieldCheck size={18} color="#06b6d4" /></div>
                 <div className="kpi-val">8 Projects</div>
                 <div className="kpi-sub">Goatery & Poultry Units</div>
               </div>
-              <div className="kpi-card" style={{ borderTopColor: '#f43f5e' }}>
-                <div className="kpi-title">Eco-Tourism & Agri <Tent size={18} color="#f43f5e" /></div>
+              <div className="kpi-card" style={{borderTopColor: '#f43f5e', cursor: 'pointer'}} onClick={() => openModal("Eco-Tourism & Agri", "tourism")}>
+                <div className="kpi-title">Eco-Tourism & Agri<Tent size={18} color="#f43f5e" /></div>
                 <div className="kpi-val" style={{ fontSize: '1.4rem' }}>3 Tourism / 5 Agri</div>
                 <div className="kpi-sub">Diversified Income Portfolios</div>
               </div>
