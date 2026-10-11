@@ -395,15 +395,18 @@ export function getProductVerificationUrl(productId: string, originUrl?: string)
   return `${baseUrl}/#/products?productId=${productId}`;
 }
 
-export function buildQRPayload(product: SHGProduct, originUrl: string, directUrlOnly: boolean = false): string {
+export function buildQRPayload(product: SHGProduct, originUrl: string): string {
   const verificationLink = getProductVerificationUrl(product.id, originUrl);
 
-  if (directUrlOnly) {
-    // Pure URL: Triggers immediate 1-tap browser open on ALL mobile cameras
-    return verificationLink;
-  }
-
-  // Multi-line text with clean isolated URL on its own line (no "Web Link:" prefix)
-  // so QR scanner engines can recognize and parse it as a standalone clickable link
-  return `Product: ${product.name}\nProduct ID: ${product.id}\nDate of Packaging: ${product.dateOfPackaging}\nProduced By: ${product.manufacturerSHG}\n\n${verificationLink}`;
+  // Contains all details (Product, ID, Date of Packaging, Produced By)
+  // followed by an empty line and the clean standalone URL
+  // so any mobile camera can display the details AND easily tap the link to browse directly
+  return [
+    `Product: ${product.name}`,
+    `Product ID: ${product.id}`,
+    `Date of Packaging: ${product.dateOfPackaging}`,
+    `Produced By: ${product.manufacturerSHG}`,
+    '',
+    verificationLink
+  ].join('\n');
 }

@@ -11,7 +11,6 @@ interface Props {
 
 export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }) => {
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
-  const [directUrlMode, setDirectUrlMode] = useState<boolean>(true); // default to true for instant 1-tap browser redirect
   const [copied, setCopied] = useState<boolean>(false);
   const stickerRef = useRef<HTMLDivElement>(null);
 
@@ -21,18 +20,18 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
     typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : ''
   );
 
-  // Active payload based on user selection:
-  // - directUrlMode=true: Pure clean URL (phone cameras instantly show "Open in Safari/Chrome")
-  // - directUrlMode=false: Product details with clean separated URL on its own line
-  const activeQrPayload = directUrlMode
-    ? verificationUrl
-    : buildQRPayload(product, typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : '', false);
+  // Payload: Always keeps all product details (Product, ID, Date of Packaging, Produced By)
+  // followed by the cleanly separated standalone URL so it can be clicked directly to open the site
+  const qrPayload = buildQRPayload(
+    product,
+    typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : ''
+  );
 
   useEffect(() => {
     if (!isOpen) return;
 
-    QRCode.toDataURL(activeQrPayload, {
-      width: 260,
+    QRCode.toDataURL(qrPayload, {
+      width: 280,
       margin: 1,
       color: {
         dark: '#0f172a',
@@ -42,7 +41,7 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
     })
       .then((url) => setQrDataUrl(url))
       .catch((err) => console.error('Error generating QR code:', err));
-  }, [product.id, activeQrPayload, isOpen]);
+  }, [product.id, qrPayload, isOpen]);
 
   if (!isOpen) return null;
 
@@ -138,7 +137,7 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
             </div>
             <div>
               <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>Packaging QR Code &amp; Verification Link</h3>
-              <span style={{ fontSize: '0.74rem', color: '#64748b' }}>Separate QR code for physical packaging sticker &amp; direct mobile scanning</span>
+              <span style={{ fontSize: '0.74rem', color: '#64748b' }}>Includes full product details with separated direct redirect web link</span>
             </div>
           </div>
           <button
@@ -149,55 +148,11 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
           </button>
         </div>
 
-        {/* QR MODE SELECTOR (Direct 1-Click Redirect vs Text+URL) */}
-        <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '10px', border: '1px solid #e2e8f0', marginBottom: '14px' }}>
-          <div style={{ fontSize: '0.74rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
-            Select QR Scanning Behavior:
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-            <button
-              onClick={() => setDirectUrlMode(true)}
-              style={{
-                padding: '8px 10px',
-                borderRadius: '8px',
-                border: directUrlMode ? '2px solid #025c99' : '1px solid #cbd5e1',
-                background: directUrlMode ? '#eff6ff' : '#fff',
-                color: directUrlMode ? '#025c99' : '#475569',
-                fontSize: '0.75rem',
-                fontWeight: 800,
-                cursor: 'pointer',
-                textAlign: 'left'
-              }}
-            >
-              <div>🌐 1-Tap Browser Open</div>
-              <div style={{ fontSize: '0.66rem', fontWeight: 500, opacity: 0.85, marginTop: '2px' }}>Instant website redirect on scan</div>
-            </button>
-
-            <button
-              onClick={() => setDirectUrlMode(false)}
-              style={{
-                padding: '8px 10px',
-                borderRadius: '8px',
-                border: !directUrlMode ? '2px solid #025c99' : '1px solid #cbd5e1',
-                background: !directUrlMode ? '#eff6ff' : '#fff',
-                color: !directUrlMode ? '#025c99' : '#475569',
-                fontSize: '0.75rem',
-                fontWeight: 800,
-                cursor: 'pointer',
-                textAlign: 'left'
-              }}
-            >
-              <div>📋 Details + Clean URL</div>
-              <div style={{ fontSize: '0.66rem', fontWeight: 500, opacity: 0.85, marginTop: '2px' }}>Shows text &amp; separated link</div>
-            </button>
-          </div>
-        </div>
-
-        {/* DIRECT WEB LINK PREVIEW & ACTIONS */}
-        <div style={{ background: '#f0fdf4', padding: '12px 14px', borderRadius: '10px', border: '1px solid #bbf7d0', marginBottom: '14px' }}>
+        {/* SCAN PAYLOAD PREVIEW BOX */}
+        <div style={{ background: '#f8fafc', padding: '12px 14px', borderRadius: '10px', border: '1px solid #e2e8f0', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#166534', textTransform: 'uppercase' }}>
-              Direct Product Verification Web Link
+            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#025c99', textTransform: 'uppercase' }}>
+              📱 Mobile Scan Content (Details + Separated URL)
             </span>
             <div style={{ display: 'flex', gap: '6px' }}>
               <button
@@ -217,7 +172,7 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
                 }}
               >
                 {copied ? <Check size={12} color="#059669" /> : <Copy size={12} />}
-                {copied ? 'Copied!' : 'Copy Link'}
+                {copied ? 'Copied Link' : 'Copy Link'}
               </button>
               <a
                 href={verificationUrl}
@@ -241,8 +196,22 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
               </a>
             </div>
           </div>
-          <div style={{ fontSize: '0.72rem', color: '#0369a1', fontFamily: 'monospace', wordBreak: 'break-all', background: '#fff', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1' }}>
-            {verificationUrl}
+
+          <div style={{
+            fontSize: '0.74rem',
+            color: '#1e293b',
+            fontFamily: 'monospace',
+            whiteSpace: 'pre-wrap',
+            background: '#fff',
+            padding: '10px 12px',
+            borderRadius: '8px',
+            border: '1px solid #cbd5e1',
+            lineHeight: '1.5'
+          }}>
+            {qrPayload}
+          </div>
+          <div style={{ fontSize: '0.68rem', color: '#059669', fontWeight: 600, marginTop: '6px' }}>
+            ✓ The URL is cleanly separated on its own line so phones display both the product details and a clickable hyperlink to the site.
           </div>
         </div>
 
@@ -285,15 +254,15 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
               <img
                 src={qrDataUrl}
                 alt={`QR Code for ${product.id}`}
-                style={{ width: '175px', height: '175px', display: 'block', borderRadius: '6px' }}
+                style={{ width: '185px', height: '185px', display: 'block', borderRadius: '6px' }}
               />
             ) : (
-              <div style={{ width: '175px', height: '175px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+              <div style={{ width: '185px', height: '185px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
                 Generating QR...
               </div>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', color: '#047857', fontSize: '0.72rem', fontWeight: 700 }}>
-              <Sparkles size={12} /> Scan with any phone camera to verify &amp; browse product
+              <Sparkles size={12} /> Scan with any phone camera to view details &amp; open site
             </div>
           </div>
 
