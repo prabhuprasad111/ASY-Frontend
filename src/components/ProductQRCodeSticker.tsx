@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import QRCode from 'qrcode';
-import { SHGProduct, buildQRPayload } from '../data/shgProductsData';
-import { Printer, Download, X, QrCode as QrIcon, ShieldCheck, Sparkles, PawPrint } from 'lucide-react';
+import { SHGProduct, buildQRPayload, getProductVerificationUrl } from '../data/shgProductsData';
+import { Printer, Download, X, QrCode as QrIcon, ShieldCheck, Sparkles, PawPrint, ExternalLink, Copy, Check } from 'lucide-react';
 
 interface Props {
   product: SHGProduct;
@@ -11,16 +11,27 @@ interface Props {
 
 export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }) => {
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
+  const [directUrlMode, setDirectUrlMode] = useState<boolean>(true); // default to true for instant 1-tap browser redirect
+  const [copied, setCopied] = useState<boolean>(false);
   const stickerRef = useRef<HTMLDivElement>(null);
 
-  // Payload format matching user specification:
-  // Product Name, Product ID, Date of Packaging, Produced By, and then Web Link
-  const qrPayload = buildQRPayload(product, `${window.location.origin}${window.location.pathname}`);
+  // Direct clean URL pointing straight to this product's verification page
+  const verificationUrl = getProductVerificationUrl(
+    product.id,
+    typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : ''
+  );
+
+  // Active payload based on user selection:
+  // - directUrlMode=true: Pure clean URL (phone cameras instantly show "Open in Safari/Chrome")
+  // - directUrlMode=false: Product details with clean separated URL on its own line
+  const activeQrPayload = directUrlMode
+    ? verificationUrl
+    : buildQRPayload(product, typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : '', false);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    QRCode.toDataURL(qrPayload, {
+    QRCode.toDataURL(activeQrPayload, {
       width: 260,
       margin: 1,
       color: {
@@ -31,9 +42,15 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
     })
       .then((url) => setQrDataUrl(url))
       .catch((err) => console.error('Error generating QR code:', err));
-  }, [product.id, qrPayload, isOpen]);
+  }, [product.id, activeQrPayload, isOpen]);
 
   if (!isOpen) return null;
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(verificationUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handlePrint = () => {
     const printContent = stickerRef.current;
@@ -58,11 +75,15 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
               .meta-label { font-weight: 600; color: #64748b; }
               .meta-val { font-weight: 700; text-align: right; }
               .footer { font-size: 9px; color: #059669; text-align: center; margin-top: 10px; border-top: 1px solid #e2e8f0; padding-top: 6px; font-weight: 600; }
+              .url-box { font-size: 10px; word-break: break-all; background: #f1f5f9; padding: 6px; border-radius: 4px; margin-top: 8px; text-align: center; color: #025c99; font-weight: 700; }
             </style>
           </head>
           <body>
             <div class="sticker-container">
               ${printContent.innerHTML}
+              <div class="url-box">
+                Direct Verification Web Link:<br/>${verificationUrl}
+              </div>
             </div>
             <script>
               window.onload = function() { window.print(); window.close(); }
@@ -103,8 +124,8 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
         background: '#fff',
         borderRadius: '20px',
         width: '100%',
-        maxWidth: '520px',
-        maxHeight: '90vh',
+        maxWidth: '540px',
+        maxHeight: '92vh',
         overflowY: 'auto',
         boxShadow: '0 25px 50px -12px rgba(0,0,0,0.3)',
         padding: '24px'
@@ -116,8 +137,8 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
               <QrIcon size={20} />
             </div>
             <div>
-              <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>Packaging QR Label Generator</h3>
-              <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Separate QR code for bottle stickers &amp; packaging verification</span>
+              <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>Packaging QR Code &amp; Verification Link</h3>
+              <span style={{ fontSize: '0.74rem', color: '#64748b' }}>Separate QR code for physical packaging sticker &amp; direct mobile scanning</span>
             </div>
           </div>
           <button
@@ -128,15 +149,104 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
           </button>
         </div>
 
-        {/* Scan Simulation Notice */}
-        <div style={{ background: '#f0f9ff', padding: '12px 14px', borderRadius: '10px', border: '1px solid #bae6fd', marginBottom: '16px', fontSize: '0.78rem', color: '#0369a1', lineHeight: '1.4' }}>
-          <strong>📱 On Scanning from any phone camera:</strong>
-          <div style={{ marginTop: '4px', fontFamily: 'monospace', fontSize: '0.72rem', background: '#fff', padding: '8px', borderRadius: '6px', border: '1px solid #cbd5e1', color: '#1e293b', whiteSpace: 'pre-wrap' }}>
-            {qrPayload}
+        {/* QR MODE SELECTOR (Direct 1-Click Redirect vs Text+URL) */}
+        <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '10px', border: '1px solid #e2e8f0', marginBottom: '14px' }}>
+          <div style={{ fontSize: '0.74rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
+            Select QR Scanning Behavior:
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+            <button
+              onClick={() => setDirectUrlMode(true)}
+              style={{
+                padding: '8px 10px',
+                borderRadius: '8px',
+                border: directUrlMode ? '2px solid #025c99' : '1px solid #cbd5e1',
+                background: directUrlMode ? '#eff6ff' : '#fff',
+                color: directUrlMode ? '#025c99' : '#475569',
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              <div>🌐 1-Tap Browser Open</div>
+              <div style={{ fontSize: '0.66rem', fontWeight: 500, opacity: 0.85, marginTop: '2px' }}>Instant website redirect on scan</div>
+            </button>
+
+            <button
+              onClick={() => setDirectUrlMode(false)}
+              style={{
+                padding: '8px 10px',
+                borderRadius: '8px',
+                border: !directUrlMode ? '2px solid #025c99' : '1px solid #cbd5e1',
+                background: !directUrlMode ? '#eff6ff' : '#fff',
+                color: !directUrlMode ? '#025c99' : '#475569',
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              <div>📋 Details + Clean URL</div>
+              <div style={{ fontSize: '0.66rem', fontWeight: 500, opacity: 0.85, marginTop: '2px' }}>Shows text &amp; separated link</div>
+            </button>
           </div>
         </div>
 
-        {/* The Printable Sticker */}
+        {/* DIRECT WEB LINK PREVIEW & ACTIONS */}
+        <div style={{ background: '#f0fdf4', padding: '12px 14px', borderRadius: '10px', border: '1px solid #bbf7d0', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#166534', textTransform: 'uppercase' }}>
+              Direct Product Verification Web Link
+            </span>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              <button
+                onClick={handleCopyLink}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  background: '#fff',
+                  border: '1px solid #cbd5e1',
+                  color: '#334155',
+                  padding: '3px 8px',
+                  borderRadius: '5px',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                {copied ? <Check size={12} color="#059669" /> : <Copy size={12} />}
+                {copied ? 'Copied!' : 'Copy Link'}
+              </button>
+              <a
+                href={verificationUrl}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  background: '#025c99',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  padding: '3px 8px',
+                  borderRadius: '5px',
+                  fontSize: '0.7rem',
+                  fontWeight: 700
+                }}
+              >
+                <span>Browse URL</span>
+                <ExternalLink size={12} />
+              </a>
+            </div>
+          </div>
+          <div style={{ fontSize: '0.72rem', color: '#0369a1', fontFamily: 'monospace', wordBreak: 'break-all', background: '#fff', padding: '6px 10px', borderRadius: '6px', border: '1px solid #cbd5e1' }}>
+            {verificationUrl}
+          </div>
+        </div>
+
+        {/* THE PRINTABLE QR STICKER (For Physical Packaging) */}
         <div
           ref={stickerRef}
           style={{
@@ -175,15 +285,15 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
               <img
                 src={qrDataUrl}
                 alt={`QR Code for ${product.id}`}
-                style={{ width: '170px', height: '170px', display: 'block', borderRadius: '6px' }}
+                style={{ width: '175px', height: '175px', display: 'block', borderRadius: '6px' }}
               />
             ) : (
-              <div style={{ width: '170px', height: '170px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+              <div style={{ width: '175px', height: '175px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
                 Generating QR...
               </div>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', color: '#047857', fontSize: '0.72rem', fontWeight: 700 }}>
-              <Sparkles size={12} /> Scan to verify authenticity &amp; open product page
+              <Sparkles size={12} /> Scan with any phone camera to verify &amp; browse product
             </div>
           </div>
 
@@ -211,7 +321,7 @@ export const ProductQRCodeModal: React.FC<Props> = ({ product, isOpen, onClose }
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Modal Action Buttons */}
         <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
           <button
             onClick={handleDownload}

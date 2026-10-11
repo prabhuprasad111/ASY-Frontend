@@ -383,8 +383,27 @@ export const shgProducts: SHGProduct[] = [
   }
 ];
 
-export function buildQRPayload(product: SHGProduct, originUrl: string): string {
-  const cleanBase = originUrl.split('#')[0].replace(/\/+$/, '');
-  const verificationLink = `${cleanBase}/#/products?productId=${product.id}`;
-  return `Product: ${product.name}\nProduct ID: ${product.id}\nDate of Packaging: ${product.dateOfPackaging}\nProduced By: ${product.manufacturerSHG}\nWeb Link: ${verificationLink}`;
+export function getProductVerificationUrl(productId: string, originUrl?: string): string {
+  // If originUrl is provided and not on localhost, use it; otherwise use github pages if on local
+  const currentOrigin = originUrl || (typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : '');
+  const cleanBase = currentOrigin.split('#')[0].replace(/\/+$/, '');
+  
+  // If running on localhost or 127.0.0.1, phone scans won't be able to reach localhost unless on deployed URL:
+  const isLocal = cleanBase.includes('localhost') || cleanBase.includes('127.0.0.1') || !cleanBase;
+  const baseUrl = isLocal ? 'https://prabhuprasad111.github.io/ASY-Frontend' : cleanBase;
+  
+  return `${baseUrl}/#/products?productId=${productId}`;
+}
+
+export function buildQRPayload(product: SHGProduct, originUrl: string, directUrlOnly: boolean = false): string {
+  const verificationLink = getProductVerificationUrl(product.id, originUrl);
+
+  if (directUrlOnly) {
+    // Pure URL: Triggers immediate 1-tap browser open on ALL mobile cameras
+    return verificationLink;
+  }
+
+  // Multi-line text with clean isolated URL on its own line (no "Web Link:" prefix)
+  // so QR scanner engines can recognize and parse it as a standalone clickable link
+  return `Product: ${product.name}\nProduct ID: ${product.id}\nDate of Packaging: ${product.dateOfPackaging}\nProduced By: ${product.manufacturerSHG}\n\n${verificationLink}`;
 }
